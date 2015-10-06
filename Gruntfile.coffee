@@ -124,6 +124,13 @@ module.exports = (grunt) ->
           livereload: true
           livereloadOnError: true
 
+      jade:
+        files: ['spec/**/*.jade']
+        tasks: ['jade']
+        options:
+          livereload: true
+          livereloadOnError: true
+
       # stylus:
       #   files: ['demos/assets/css/**/*.styl']
       #   tasks: ['stylus']
