@@ -37,7 +37,6 @@
     "grunt-growl": "~0.1.5",
     "jasmine": "2.x",
     "q": "~0.9.7",
-    "remapify": "^1.4.4",
-    "vue": "*"
+    "remapify": "^1.4.4"
   }
 }
