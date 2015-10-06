@@ -2,6 +2,8 @@
 npm = require './tasks/npm'
 remapify = require 'remapify'
 
+JASMINE_MODULE = 'node_modules/jasmine/node_modules/jasmine-core'
+
 module.exports = (grunt) ->
   grunt.initConfig
 
@@ -36,33 +38,59 @@ module.exports = (grunt) ->
             'src/**/*.coffee'
           ]
           'build/chord-viewer.spec.js': [
-            'specs/support/spec_helper.coffee'
-            'specs/support/**/*.coffee'
-            'specs/**/*.coffee'
+            'spec/support/spec_helper.coffee'
+            'spec/support/**/*.coffee'
+            'spec/**/*.coffee'
           ]
 
-      # demos:
-      #   options:
-      #     transform: ['coffeeify']
-      #     browserifyOptions:
-      #       extensions: ['.coffee']
-      #     preBundleCB: (b) ->
-      #       b.plugin(remapify, [
-      #         {
-      #           cwd: __dirname
-      #           src: './lib/**/*.js'
-      #           expose: 'chord-viewer'
-      #           filter: (alias, dirname, basename) ->
-      #             alias = alias
-      #             .replace(/\/lib\//, '/')
-      #             .replace(/\/index\.js$/, '')
-      #             .replace(/\.js$/, '')
-      #             alias
-      #         }
-      #       ])
-      #
-      #   files:
-      #     'build/index.js': ['demos/assets/js/index.coffee']
+    #     ######   #######  ########  ##    ##
+    #    ##    ## ##     ## ##     ##  ##  ##
+    #    ##       ##     ## ##     ##   ####
+    #    ##       ##     ## ########     ##
+    #    ##       ##     ## ##           ##
+    #    ##    ## ##     ## ##           ##
+    #     ######   #######  ##           ##
+    copy:
+      jasmine:
+        files: [
+          {
+            expand: true
+            cwd: "#{JASMINE_MODULE}/images"
+            src: "jasmine_favicon.png"
+            dest: 'build/spec'
+            flatten: true
+          }
+          {
+            expand: true
+            cwd: "#{JASMINE_MODULE}/lib/jasmine-core"
+            src: [
+              "jasmine.css"
+              "jasmine.js"
+              "jasmine-html.js"
+              "boot.js"
+            ]
+            dest: 'build/spec'
+            flatten: true
+          }
+        ]
+
+    #          ##    ###    ########  ########
+    #          ##   ## ##   ##     ## ##
+    #          ##  ##   ##  ##     ## ##
+    #          ## ##     ## ##     ## ######
+    #    ##    ## ######### ##     ## ##
+    #    ##    ## ##     ## ##     ## ##
+    #     ######  ##     ## ########  ########
+    jade:
+      jasmine:
+        options:
+          pretty: false
+          compiledDebug: false
+          data:
+            debug: false
+
+        files:
+          'build/spec/jasmine.html': 'spec/support/jasmine.jade'
 
     #     ######  ######## ##    ## ##       ##     ##  ######
     #    ##    ##    ##     ##  ##  ##       ##     ## ##    ##
@@ -143,6 +171,8 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-contrib-watch')
   grunt.loadNpmTasks('grunt-contrib-coffee')
   grunt.loadNpmTasks('grunt-contrib-stylus')
+  grunt.loadNpmTasks('grunt-contrib-copy')
+  grunt.loadNpmTasks('grunt-contrib-jade')
   grunt.loadNpmTasks('grunt-browserify')
   grunt.loadNpmTasks('grunt-growl')
 
@@ -152,8 +182,9 @@ module.exports = (grunt) ->
     'coffee:lib'
     'browserify:lib'
     'uglify'
+    'jade'
     # 'stylus'
+    'copy'
     'npm:test'
-    # 'browserify:demos'
   ])
   grunt.registerTask('default', ['all'])

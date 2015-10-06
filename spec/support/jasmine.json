@@ -6,6 +6,6 @@
   ],
   "helpers": [
     "support/coffee-script.js",
-    "support/**/*.coffee"
+    "support/*.coffee"
   ]
 }
