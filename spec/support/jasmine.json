@@ -2,10 +2,10 @@
   "coffee": true,
   "spec_dir": "spec",
   "spec_files": [
-    "**/*.coffee"
+    "*.coffee"
   ],
   "helpers": [
     "support/coffee-script.js",
-    "support/*.coffee"
+    "support/spec-helper.coffee"
   ]
 }
