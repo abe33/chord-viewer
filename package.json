@@ -2,7 +2,7 @@
   "name": "chord-viewer",
   "version": "0.0.0",
   "author": "Cédric Néhémie <cedric.nehemie@gmail.com>",
-  "description": "Chord viewer using HTML custom elements",
+  "description": "Chord viewer for HTML",
   "keywords": [
     "chord",
     "viewer",
