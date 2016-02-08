@@ -3,17 +3,17 @@ import notes from '../src/notes'
 
 describe('notes', () => {
   describe('.isNote()', () => {
-    const octaveNames = 'A B C D E F G a b c d e f g'.split(' ')
+    const letterNames = 'A B C D E F G a b c d e f g'.split(' ')
 
-    octaveNames.forEach((octaveName) => {
-      it(`matches all variants of ${octaveName}`, () => {
-        expect(notes.isNote(`${octaveName}`)).to.be(true)
-        expect(notes.isNote(`${octaveName}4`)).to.be(true)
-        expect(notes.isNote(`${octaveName}b`)).to.be(true)
-        expect(notes.isNote(`${octaveName}#`)).to.be(true)
-        expect(notes.isNote(`${octaveName}b4`)).to.be(true)
-        expect(notes.isNote(`${octaveName}#4`)).to.be(true)
-        expect(notes.isNote(`${octaveName}#10`)).to.be(true)
+    letterNames.forEach((letterName) => {
+      it(`matches all variants of ${letterName}`, () => {
+        expect(notes.isNote(`${letterName}`)).to.be(true)
+        expect(notes.isNote(`${letterName}4`)).to.be(true)
+        expect(notes.isNote(`${letterName}b`)).to.be(true)
+        expect(notes.isNote(`${letterName}#`)).to.be(true)
+        expect(notes.isNote(`${letterName}b4`)).to.be(true)
+        expect(notes.isNote(`${letterName}#4`)).to.be(true)
+        expect(notes.isNote(`${letterName}#10`)).to.be(true)
       })
     })
 
@@ -36,7 +36,33 @@ describe('notes', () => {
     })
   })
 
-  describe('', () => {
+  describe('.letter()', () => {
+    it('returns the octave letter name', () => {
+      expect(notes.letter('A')).to.eql('A')
+      expect(notes.letter('B4')).to.eql('B')
+      expect(notes.letter('Cb')).to.eql('C')
+      expect(notes.letter('D#')).to.eql('D')
+      expect(notes.letter('Eb4')).to.eql('E')
+      expect(notes.letter('F#4')).to.eql('F')
+    })
+  })
 
+  describe('.accidental()', () => {
+    it('returns the accidental for notes that have one', () => {
+      expect(notes.accidental('A')).to.eql('')
+      expect(notes.accidental('Ab')).to.eql('b')
+      expect(notes.accidental('A#')).to.eql('#')
+      expect(notes.accidental('Ab4')).to.eql('b')
+      expect(notes.accidental('A#4')).to.eql('#')
+    })
+  })
+
+  describe('.octave', () => {
+    it('returns the octave number of the note', () => {
+      expect(notes.octave('A')).to.eql(4)
+      expect(notes.octave('B4')).to.eql(4)
+      expect(notes.octave('C#8')).to.eql(8)
+      expect(notes.octave('D#1')).to.eql(1)
+    })
   })
 })
