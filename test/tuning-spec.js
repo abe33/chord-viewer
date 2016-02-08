@@ -51,7 +51,7 @@ describe('Tuning', () => {
       expect(tuning.equals(tuning2)).to.eql(true)
     })
 
-    it('returns true when two tunings has notes with the same pitch', () => {
+    it('returns true when two tunings has notes with the same transpose', () => {
       let tuning1 = new Tuning([
         new Note('Eb'),
         new Note('F#'),
@@ -93,16 +93,16 @@ describe('Tuning', () => {
     })
   })
 
-  describe('.pitchBySemitone', () => {
-    it('pitches all the note in the tuning', () => {
-      expect(tuning.pitchBySemitone(2).getNotes()).to.eql([
+  describe('.transposeBySemitone', () => {
+    it('transposes all the note in the tuning', () => {
+      expect(tuning.transposeBySemitone(2).getNotes()).to.eql([
         new Note('E'),
         new Note('A'),
         new Note('D5'),
         new Note('G5'),
         new Note('B6'),
         new Note('E6')
-      ].map(n => n.pitchBySemitone(2)))
+      ].map(n => n.transposeBySemitone(2)))
     })
   })
 

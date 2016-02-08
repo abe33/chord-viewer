@@ -8,7 +8,7 @@ const {
 
 export default class Interval {
   static noteAtInterval (note, interval) {
-    return note.pitchBySemitone(INTERVAL_OFFSETS[interval])
+    return note.transposeBySemitone(INTERVAL_OFFSETS[interval])
   }
 
   constructor (start, end) {
@@ -17,7 +17,7 @@ export default class Interval {
     if (!(end instanceof Note)) {
       switch (typeof end) {
         case 'number':
-          end = start.pitchBySemitone(end)
+          end = start.transposeBySemitone(end)
           break
         case 'string':
           if (NOTE_REGEXP.test(end)) {

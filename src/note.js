@@ -6,7 +6,7 @@ export default class Note {
     const [name, octave] = string.split(/(?=\d)/)
     this.name = name
     this.octave = Number(octave != null ? octave : 4)
-    this.frequency = u.pitchAtOctave(this.name, this.octave)
+    this.frequency = u.transposeAtOctave(this.name, this.octave)
   }
 
   getName () { return `${this.name}${this.octave}` }
@@ -28,9 +28,9 @@ export default class Note {
 
   getOctave () { return this.octave }
 
-  pitchToOctave (newOctave) { return new Note(this.name + newOctave) }
+  transposeToOctave (newOctave) { return new Note(this.name + newOctave) }
 
-  pitchBySemitone (semitones) {
+  transposeBySemitone (semitones) {
     var octave = this.octave
     var indexStart = c.CHROMATIC_SCALE.indexOf(this.name)
 

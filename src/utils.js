@@ -2,21 +2,21 @@
 import c from './constants'
 
 export default {
-  pitchAtOctave (name, octave) {
+  transposeAtOctave (name, octave) {
     const delta = octave - c.MIDDLE_OCTAVE
 
-    let pitch = c.PITCH_BY_NAME[name]
+    let transpose = c.PITCH_BY_NAME[name]
     if (delta > 0) {
       for (let i = 0; delta > 0 ? i < delta : i > delta; delta > 0 ? i++ : i--) {
-        pitch *= c.OCTAVE_PITCH_RATIO
+        transpose *= c.OCTAVE_PITCH_RATIO
       }
     } else {
       const end = Math.abs(delta)
       for (let i = 0; end > 0 ? i < end : i > end; end > 0 ? i++ : i--) {
-        pitch /= c.OCTAVE_PITCH_RATIO
+        transpose /= c.OCTAVE_PITCH_RATIO
       }
     }
-    return pitch
+    return transpose
   },
 
   diatonicDistance (start, end) {

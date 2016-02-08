@@ -37,7 +37,7 @@ describe('FretBoard', () => {
       expect(fretboard.getNote([1, 0])).to.eql(new Note('E6'))
     })
 
-    it('pitches the string notes based on the passed-in fret', () => {
+    it('transposes the string notes based on the passed-in fret', () => {
       expect(fretboard.getNote([6, 3])).to.eql(new Note('G'))
       expect(fretboard.getNote([5, 2])).to.eql(new Note('B'))
       expect(fretboard.getNote([4, 2])).to.eql(new Note('E5'))

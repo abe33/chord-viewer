@@ -25,8 +25,8 @@ export default class Tuning {
     return this.notes.length - index
   }
 
-  pitchBySemitone (step) {
-    return new Tuning(this.notes.map(n => n.pitchBySemitone(step)))
+  transposeBySemitone (step) {
+    return new Tuning(this.notes.map(n => n.transposeBySemitone(step)))
   }
 
   equals (tuning) {

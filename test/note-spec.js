@@ -90,24 +90,24 @@ describe('Note', () => {
     })
   })
 
-  describe('.pitchToOctave', () => {
-    it('pitches itself to the specified octave', () => {
-      expect(new Note('A').pitchToOctave(5).getFrequency()).to.eql(880)
-      expect(new Note('A').pitchToOctave(3).getFrequency()).to.eql(220)
+  describe('.transposeToOctave', () => {
+    it('transposes itself to the specified octave', () => {
+      expect(new Note('A').transposeToOctave(5).getFrequency()).to.eql(880)
+      expect(new Note('A').transposeToOctave(3).getFrequency()).to.eql(220)
 
-      expect(new Note('A').pitchToOctave(5).getName()).to.eql('A5')
-      expect(new Note('A').pitchToOctave(5).getOctave()).to.eql(5)
+      expect(new Note('A').transposeToOctave(5).getName()).to.eql('A5')
+      expect(new Note('A').transposeToOctave(5).getOctave()).to.eql(5)
     })
   })
 
-  describe('.pitchBySemitone', () => {
-    it('pitches itself by the specified tone step', () => {
-      expect(new Note('A').pitchBySemitone(1)).to.eql(new Note('A#'))
-      expect(new Note('B').pitchBySemitone(1)).to.eql(new Note('C'))
-      expect(new Note('A').pitchBySemitone(2)).to.eql(new Note('B'))
-      expect(new Note('A').pitchBySemitone(4)).to.eql(new Note('C#5'))
-      expect(new Note('A').pitchBySemitone(4)).to.eql(new Note('C#5'))
-      expect(new Note('A').pitchBySemitone(16)).to.eql(new Note('C#6'))
+  describe('.transposeBySemitone', () => {
+    it('transposes itself by the specified tone step', () => {
+      expect(new Note('A').transposeBySemitone(1)).to.eql(new Note('A#'))
+      expect(new Note('B').transposeBySemitone(1)).to.eql(new Note('C'))
+      expect(new Note('A').transposeBySemitone(2)).to.eql(new Note('B'))
+      expect(new Note('A').transposeBySemitone(4)).to.eql(new Note('C#5'))
+      expect(new Note('A').transposeBySemitone(4)).to.eql(new Note('C#5'))
+      expect(new Note('A').transposeBySemitone(16)).to.eql(new Note('C#6'))
     })
   })
 

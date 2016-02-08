@@ -12,6 +12,6 @@ export default class FretBoard {
 
   getNote (position) {
     position = FretPosition.fromObject(position)
-    return this.tuning.getNote(position.string).pitchBySemitone(position.fret)
+    return this.tuning.getNote(position.string).transposeBySemitone(position.fret)
   }
 }
