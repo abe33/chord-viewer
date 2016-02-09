@@ -18,29 +18,46 @@ describe('notes', () => {
     })
 
     it('does not match letters that are not octave name', () => {
-      expect(notes.isNote('I')).to.be.false
-      expect(notes.isNote('Ib')).to.be.false
-      expect(notes.isNote('I#')).to.be.false
-      expect(notes.isNote('Z4')).to.be.false
-      expect(notes.isNote('Z#4')).to.be.false
+      expect(notes.isNote('I')).to.be(false)
+      expect(notes.isNote('Ib')).to.be(false)
+      expect(notes.isNote('I#')).to.be(false)
+      expect(notes.isNote('Z4')).to.be(false)
+      expect(notes.isNote('Z#4')).to.be(false)
     })
 
     it('does not match strings with invalid octave number', () => {
-      expect(notes.isNote('A-1')).to.be.false
-      expect(notes.isNote('Bb-1')).to.be.false
+      expect(notes.isNote('A-1')).to.be(false)
+      expect(notes.isNote('Bb-1')).to.be(false)
     })
 
     it('does not match strings with invalid accidental characters', () => {
-      expect(notes.isNote('Ac')).to.be.false
-      expect(notes.isNote('Bd')).to.be.false
+      expect(notes.isNote('Ac')).to.be(false)
+      expect(notes.isNote('Bd')).to.be(false)
+    })
+  })
+
+  describe('.name()', () => {
+    it('returns the note name', () => {
+      expect(notes.name('I')).to.eql('')
+      expect(notes.name('A')).to.eql('A')
+      expect(notes.name('a')).to.eql('A')
+      expect(notes.name('B4')).to.eql('B')
+      expect(notes.name('Cb')).to.eql('Cb')
+      expect(notes.name('cb')).to.eql('Cb')
+      expect(notes.name('D#')).to.eql('D#')
+      expect(notes.name('Eb4')).to.eql('Eb')
+      expect(notes.name('F#4')).to.eql('F#')
     })
   })
 
   describe('.letter()', () => {
     it('returns the octave letter name', () => {
+      expect(notes.letter('I')).to.eql('')
       expect(notes.letter('A')).to.eql('A')
+      expect(notes.letter('a')).to.eql('A')
       expect(notes.letter('B4')).to.eql('B')
       expect(notes.letter('Cb')).to.eql('C')
+      expect(notes.letter('cb')).to.eql('C')
       expect(notes.letter('D#')).to.eql('D')
       expect(notes.letter('Eb4')).to.eql('E')
       expect(notes.letter('F#4')).to.eql('F')
@@ -50,7 +67,11 @@ describe('notes', () => {
   describe('.accidental()', () => {
     it('returns the accidental for notes that have one', () => {
       expect(notes.accidental('A')).to.eql('')
-      expect(notes.accidental('Ab')).to.eql('b')
+      expect(notes.accidental('B')).to.eql('')
+      expect(notes.accidental('B4')).to.eql('')
+      expect(notes.accidental('Bb')).to.eql('b')
+      expect(notes.accidental('BB')).to.eql('b')
+      expect(notes.accidental('AB')).to.eql('b')
       expect(notes.accidental('A#')).to.eql('#')
       expect(notes.accidental('Ab4')).to.eql('b')
       expect(notes.accidental('A#4')).to.eql('#')
@@ -63,6 +84,73 @@ describe('notes', () => {
       expect(notes.octave('B4')).to.eql(4)
       expect(notes.octave('C#8')).to.eql(8)
       expect(notes.octave('D#1')).to.eql(1)
+    })
+  })
+
+  describe('.normalize()', () => {
+    it('returns the normalized form of the passed-in note', () => {
+      expect(notes.normalize('H-1')).to.eql('')
+      expect(notes.normalize('A')).to.eql('A4')
+      expect(notes.normalize('AB')).to.eql('Ab4')
+      expect(notes.normalize('bB4')).to.eql('Bb4')
+      expect(notes.normalize('C#8')).to.eql('C#8')
+    })
+  })
+
+  describe('.frequency()', () => {
+    it('returns the frequency for each note', () => {
+      expect(notes.frequency('C')).to.eql(261.63)
+      expect(notes.frequency('C#')).to.eql(277.18)
+      expect(notes.frequency('Db')).to.eql(277.18)
+      expect(notes.frequency('D')).to.eql(293.66)
+      expect(notes.frequency('D#')).to.eql(311.13)
+      expect(notes.frequency('Eb')).to.eql(311.13)
+      expect(notes.frequency('E')).to.eql(329.63)
+      expect(notes.frequency('F')).to.eql(349.23)
+      expect(notes.frequency('F#')).to.eql(369.99)
+      expect(notes.frequency('Gb')).to.eql(369.99)
+      expect(notes.frequency('G')).to.eql(392.00)
+      expect(notes.frequency('G#')).to.eql(415.30)
+      expect(notes.frequency('Ab')).to.eql(415.30)
+      expect(notes.frequency('A')).to.eql(440)
+      expect(notes.frequency('A#')).to.eql(466.16)
+      expect(notes.frequency('Bb')).to.eql(466.16)
+      expect(notes.frequency('B')).to.eql(493.88)
+    })
+
+    it('modulates the frequency pitch based on the note octave', () => {
+      expect(notes.frequency('C2')).to.eql(261.63 / 4)
+      expect(notes.frequency('C3')).to.eql(261.63 / 2)
+      expect(notes.frequency('C4')).to.eql(261.63)
+      expect(notes.frequency('C5')).to.eql(261.63 * 2)
+      expect(notes.frequency('C6')).to.eql(261.63 * 4)
+    })
+
+    it('returns no frequency for invalid notes', () => {
+      expect(notes.frequency('U')).to.eql(0)
+      expect(notes.frequency('A-1')).to.eql(0)
+    })
+  })
+
+  describe.skip('.display()', () => {
+    it('returns a displayable string with proper accidental characters', () => {
+      expect(notes.display('C')).to.eql('C₄')
+      expect(notes.display('C#')).to.eql('C♯₄')
+      expect(notes.display('Db')).to.eql('D♭₄')
+      expect(notes.display('D')).to.eql('D₄')
+      expect(notes.display('D#')).to.eql('D♯₄')
+      expect(notes.display('Eb')).to.eql('E♭₄')
+      expect(notes.display('E')).to.eql('E₄')
+      expect(notes.display('F')).to.eql('F₄')
+      expect(notes.display('F#')).to.eql('F♯₄')
+      expect(notes.display('Gb')).to.eql('G♭₄')
+      expect(notes.display('G')).to.eql('G₄')
+      expect(notes.display('G#')).to.eql('G♯₄')
+      expect(notes.display('Ab')).to.eql('A♭₄')
+      expect(notes.display('A')).to.eql('A₄')
+      expect(notes.display('A#')).to.eql('A♯₄')
+      expect(notes.display('Bb')).to.eql('B♭₄')
+      expect(notes.display('B')).to.eql('B₄')
     })
   })
 })
