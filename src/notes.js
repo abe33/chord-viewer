@@ -26,7 +26,7 @@ const double = R.multiply(2)
 
 const half = R.divide(R.__, 2)
 
-const pitchModulatorForBase = (base) => {
+const pitchModulator = (base) => {
   const iterate = cond([
     [R.lt(0), compose(times(always(half)), Math.abs)],
     [R.gt(0), compose(times(always(double)), Math.abs)],
@@ -35,15 +35,15 @@ const pitchModulatorForBase = (base) => {
   return compose(iterate, subtract(base))
 }
 
-const pitchModulator = pitchModulatorForBase(4)
+const pitchModulators = R.uncurryN(2, pitchModulator)
 
-const pitchTransposer = curry((frequencies, note) => {
-  const modulatePitch = compose(...pitchModulator(octave(note)))
+const pitchTransposer = curry((base, frequencies, note) => {
+  const modulatePitch = compose(...pitchModulators(base, octave(note)))
 
   return isNote(note) ? modulatePitch(prop(name(note), frequencies)) : ''
 })
 
-const frequency = pitchTransposer({
+const frequency = pitchTransposer(4, {
   'C': 261.63,
   'C#': 277.18,
   'Db': 277.18,
