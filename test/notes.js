@@ -132,10 +132,10 @@ describe('notes', () => {
     })
   })
 
-  describe.skip('.display()', () => {
+  describe('.display()', () => {
     it('returns a displayable string with proper accidental characters', () => {
       expect(notes.display('C')).to.eql('C₄')
-      expect(notes.display('C#')).to.eql('C♯₄')
+      expect(notes.display('c#')).to.eql('C♯₄')
       expect(notes.display('Db')).to.eql('D♭₄')
       expect(notes.display('D')).to.eql('D₄')
       expect(notes.display('D#')).to.eql('D♯₄')
@@ -149,8 +149,13 @@ describe('notes', () => {
       expect(notes.display('Ab')).to.eql('A♭₄')
       expect(notes.display('A')).to.eql('A₄')
       expect(notes.display('A#')).to.eql('A♯₄')
-      expect(notes.display('Bb')).to.eql('B♭₄')
+      expect(notes.display('bB')).to.eql('B♭₄')
       expect(notes.display('B')).to.eql('B₄')
+    })
+
+    it('returns an empty string for invalid notes', () => {
+      expect(notes.display('I')).to.eql('')
+      expect(notes.display('C-1')).to.eql('')
     })
   })
 })

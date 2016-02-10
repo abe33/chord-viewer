@@ -1,7 +1,7 @@
 import R from 'ramda'
 
 const {
-  always, compose, cond, converge, curry, defaultTo, drop, head, join, last, prop, replace, split, subtract, test, times, toLower, toUpper, unapply
+  always, compose, cond, converge, curry, defaultTo, drop, head, join, keys, last, prop, replace, split, subtract, test, times, toLower, toUpper, unapply
 } = R
 
 const isNote = test(/^[A-G](#|b)?(\d+)?$/i)
@@ -63,4 +63,30 @@ const frequency = pitchTransposer(4, {
   'B': 493.88
 })
 
-export default {isNote, letter, accidental, octave, normalize, frequency, name}
+const substitute = (map) => {
+  const re = new RegExp(join('|', keys(map)))
+
+  return (note) => replace(re, m => map[m], note)
+}
+
+const display = compose(
+  substitute({
+    '#': '♯',
+    'b': '♭'
+  }),
+  substitute({
+    '0': '₀',
+    '1': '₁',
+    '2': '₂',
+    '3': '₃',
+    '4': '₄',
+    '5': '₅',
+    '6': '₆',
+    '7': '₇',
+    '8': '₈',
+    '9': '₉'
+  }),
+  normalize
+)
+
+export default {isNote, letter, accidental, octave, normalize, frequency, name, display}
