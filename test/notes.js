@@ -158,4 +158,32 @@ describe('notes', () => {
       expect(notes.display('C-1')).to.eql('')
     })
   })
+
+  describe('.noteEquals()', () => {
+    it('returns true for two A on different octaves', () => {
+      expect(notes.noteEquals('A', 'A5')).to.be(true)
+    })
+
+    it('returns false for two notes with different pitch', () => {
+      expect(notes.noteEquals('A', 'B')).to.be(false)
+    })
+
+    it('returns true for a A sharp and a B flat on different octaves', () => {
+      expect(notes.noteEquals('A#', 'Bb5')).to.be(true)
+    })
+  })
+
+  describe('.pitchEquals()', () => {
+    it('returns true for two identical notes', () => {
+      expect(notes.pitchEquals('A', 'A')).to.be(true)
+    })
+
+    it('returns false for two notes with different frequencies', () => {
+      expect(notes.pitchEquals('A', 'B')).to.be(false)
+    })
+
+    it('returns true for two notes with equals frequencies but different names', () => {
+      expect(notes.pitchEquals('A#', 'Bb')).to.be(true)
+    })
+  })
 })

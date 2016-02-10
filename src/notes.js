@@ -1,7 +1,7 @@
 import R from 'ramda'
 
 const {
-  always, compose, cond, converge, curry, defaultTo, drop, head, join, keys, last, prop, replace, split, subtract, test, times, toLower, toUpper, unapply
+  always, compose, cond, converge, curry, defaultTo, drop, equals, either, head, join, keys, last, prop, replace, split, subtract, test, times, toLower, toUpper, unapply
 } = R
 
 const isNote = test(/^[A-G](#|b)?(\d+)?$/i)
@@ -89,4 +89,38 @@ const display = compose(
   normalize
 )
 
-export default {isNote, letter, accidental, octave, normalize, frequency, name, display}
+const variant = prop(R.__, {
+  'C#': 'Db',
+  'Db': 'C#',
+  'D#': 'Eb',
+  'Eb': 'D#',
+  'F#': 'Gb',
+  'Gb': 'F#',
+  'G#': 'Ab',
+  'Ab': 'G#',
+  'A#': 'Bb',
+  'Bb': 'A#'
+})
+
+const noteEquals = curry((a, b) => {
+  const compare = either(equals(name(a)), equals(variant(name(a))))
+
+  return compare(name(b))
+})
+
+const pitchEquals = curry((a, b) => {
+  return equals(frequency(a), frequency(b))
+})
+
+export default {
+  accidental,
+  display,
+  frequency,
+  isNote,
+  letter,
+  name,
+  normalize,
+  noteEquals,
+  octave,
+  pitchEquals
+}
