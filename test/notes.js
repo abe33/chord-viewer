@@ -186,4 +186,26 @@ describe('notes', () => {
       expect(notes.pitchEquals('A#', 'Bb')).to.be(true)
     })
   })
+
+  describe('.transposeToOctave()', () => {
+    it('transposes the passed-in note at the specified octave', () => {
+      expect(notes.transposeToOctave(5, 'I')).to.eql('')
+      expect(notes.transposeToOctave(5, 'A')).to.eql('A5')
+      expect(notes.transposeToOctave(3, 'A')).to.eql('A3')
+      expect(notes.transposeToOctave(5, 'A3')).to.eql('A5')
+    })
+  })
+
+  describe('.transposeBySemitone()', () => {
+    it('transposes the passed-in note by the specified semitones interval', () => {
+      // expect(notes.transposeBySemitone(1, 'I')).to.eql('')
+      // expect(notes.transposeBySemitone(-1, 'A')).to.eql('G#4')
+      // expect(notes.transposeBySemitone(0, 'A')).to.eql('A4')
+      // expect(notes.transposeBySemitone(1, 'A')).to.eql('A#4')
+      expect(notes.transposeBySemitone(1, 'B')).to.eql('C5')
+      expect(notes.transposeBySemitone(2, 'A')).to.eql('B4')
+      expect(notes.transposeBySemitone(4, 'A')).to.eql('C#5')
+      expect(notes.transposeBySemitone(16, 'A')).to.eql('C#6')
+    })
+  })
 })

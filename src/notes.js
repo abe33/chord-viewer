@@ -1,10 +1,18 @@
 import R from 'ramda'
 
 const {
-  always, compose, cond, converge, curry, defaultTo, drop, equals, either, head, join, keys, last, prop, replace, split, subtract, test, times, toLower, toUpper, unapply
+  add, always, compose, cond, converge, curry, defaultTo, drop, equals, either, head, join, keys, last, prop, replace, split, subtract, test, times, toLower, toUpper, unapply
 } = R
 
 const isNote = test(/^[A-G](#|b)?(\d+)?$/i)
+
+const onlyOnNoteOrDefault = curry((def, continuation) => {
+  return R.curryN(continuation.length, (...args) => {
+    return isNote(last(args)) ? continuation(...args) : def
+  })
+})
+
+const onlyOnNote = onlyOnNoteOrDefault('')
 
 const letter = compose(toUpper, replace(/[^A-G]/i, ''), head)
 
@@ -12,15 +20,9 @@ const accidental = compose(toLower, replace(/^.|[^Bb#]$/gi, ''))
 
 const octave = compose(Number, defaultTo(4), last, drop(1), split(/(?=\d)/))
 
-const name = cond([
-  [isNote, converge(unapply(join('')), [letter, accidental])],
-  [R.T, always('')]
-])
+const name = onlyOnNote(converge(unapply(join('')), [letter, accidental]))
 
-const normalize = cond([
-  [isNote, converge(unapply(join('')), [letter, accidental, octave])],
-  [R.T, always('')]
-])
+const normalize = onlyOnNote(converge(unapply(join('')), [letter, accidental, octave]))
 
 const double = R.multiply(2)
 
@@ -37,10 +39,10 @@ const pitchModulator = (base) => {
 
 const pitchModulators = R.uncurryN(2, pitchModulator)
 
-const pitchTransposer = curry((base, frequencies, note) => {
+const pitchTransposer = onlyOnNote((base, frequencies, note) => {
   const modulatePitch = compose(...pitchModulators(base, octave(note)))
 
-  return isNote(note) ? modulatePitch(prop(name(note), frequencies)) : ''
+  return modulatePitch(prop(name(note), frequencies))
 })
 
 const frequency = pitchTransposer(4, {
@@ -112,6 +114,42 @@ const pitchEquals = curry((a, b) => {
   return equals(frequency(a), frequency(b))
 })
 
+const transposeToOctave = onlyOnNote((octave, note) => {
+  return `${name(note)}${octave}`
+})
+
+const lastIndex = compose(subtract(R.__, 1), R.length)
+
+const nextNoteInScale = curry((scale, [note, octave]) => {
+  return cond([
+    [R.equals(lastIndex(scale)), always([scale[0], octave + 1])],
+    [R.T, (index) => [scale[index + 1], octave]]
+  ])(R.indexOf(note, scale))
+})
+
+const previousNoteInScale = curry((scale, [note, octave]) => {
+  return cond([
+    [R.equals(0), always([last(scale), octave - 1])],
+    [R.T, (index) => [scale[index - 1], octave]]
+  ])(R.indexOf(note, scale))
+})
+
+const transposeInScale = onlyOnNote((scale, offset, note) => {
+  const steps = cond([
+    [R.gt(0), compose(times(always(previousNoteInScale(scale))), Math.abs)],
+    [R.lt(0), times(always(nextNoteInScale(scale)))],
+    [R.T, always(() => [normalize(note)])]
+  ])(offset)
+
+  const walk = compose(join(''), ...steps)
+
+  return walk([name(note), octave(note)])
+})
+
+const transposeBySemitone = transposeInScale([
+  'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'
+])
+
 export default {
   accidental,
   display,
@@ -122,5 +160,7 @@ export default {
   normalize,
   noteEquals,
   octave,
-  pitchEquals
+  pitchEquals,
+  transposeBySemitone,
+  transposeToOctave
 }
