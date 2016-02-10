@@ -1,7 +1,7 @@
 import R from 'ramda'
 
 const {
-  add, always, compose, cond, converge, curry, defaultTo, drop, equals, either, head, join, keys, last, prop, replace, split, subtract, test, times, toLower, toUpper, unapply
+  always, compose, cond, converge, curry, defaultTo, drop, equals, either, head, join, keys, last, prop, replace, split, subtract, test, times, toLower, toUpper, unapply
 } = R
 
 const isNote = test(/^[A-G](#|b)?(\d+)?$/i)
