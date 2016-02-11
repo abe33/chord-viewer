@@ -208,4 +208,16 @@ describe('notes', () => {
       expect(notes.transposeBySemitone(16, 'A')).to.eql('C#6')
     })
   })
+
+  describe('.diatonicDistance()', () => {
+    it('returns the diatonic distance between two notes', () => {
+      expect(notes.diatonicDistance('I', 'B')).to.eql(-1)
+      expect(notes.diatonicDistance('A', 'I')).to.eql(-1)
+
+      expect(notes.diatonicDistance('A', 'B')).to.eql(1)
+      expect(notes.diatonicDistance('Ab', 'B')).to.eql(1)
+      expect(notes.diatonicDistance('A', 'C')).to.eql(2)
+      expect(notes.diatonicDistance('Ab', 'C#')).to.eql(2)
+    })
+  })
 })

@@ -2,7 +2,7 @@ import R from 'ramda'
 import C from './constants'
 
 const {
-  always, compose, cond, converge, curry, defaultTo, drop, equals, either, head, join, keys, last, prop, replace, split, subtract, test, times, toLower, toUpper, unapply
+  all, always, apply, compose, cond, converge, curry, defaultTo, drop, equals, either, head, indexOf, join, keys, last, length, map, prop, replace, split, subtract, test, times, toLower, toUpper, unapply
 } = R
 
 const isNote = test(/^[A-G](#|b)?(\d+)?$/i)
@@ -13,7 +13,14 @@ const onlyOnNoteOrDefault = curry((def, continuation) => {
   })
 })
 
+const onlyOnNotesOrDefault = curry((def, continuation) => {
+  return R.curryN(continuation.length, (...args) => {
+    return all(isNote, args) ? continuation(...args) : def
+  })
+})
+
 const onlyOnNote = onlyOnNoteOrDefault('')
+
 
 const letter = compose(toUpper, replace(/[^A-G]/i, ''), head)
 
@@ -82,14 +89,14 @@ const nextNoteInScale = curry((scale, [note, octave]) => {
   return cond([
     [R.equals(lastIndex(scale)), always([scale[0], octave + 1])],
     [R.T, (index) => [scale[index + 1], octave]]
-  ])(R.indexOf(note, scale))
+  ])(indexOf(note, scale))
 })
 
 const previousNoteInScale = curry((scale, [note, octave]) => {
   return cond([
     [R.equals(0), always([last(scale), octave - 1])],
     [R.T, (index) => [scale[index - 1], octave]]
-  ])(R.indexOf(note, scale))
+  ])(indexOf(note, scale))
 })
 
 const transposeInScale = onlyOnNote((scale, offset, note) => {
@@ -106,8 +113,17 @@ const transposeInScale = onlyOnNote((scale, offset, note) => {
 
 const transposeBySemitone = transposeInScale(C.CHROMATIC_SCALE)
 
+const diatonicDistance = onlyOnNotesOrDefault(-1, (a, b) => {
+  const wrapInScale = v => v < 0 ? v + length(C.DIATONIC_SCALE) : v
+  const find = compose(indexOf(R.__, C.DIATONIC_SCALE), letter)
+  const computeDistance = compose(wrapInScale, apply(subtract), map(find))
+
+  return computeDistance([b, a])
+})
+
 export default {
   accidental,
+  diatonicDistance,
   display,
   frequency,
   isNote,
