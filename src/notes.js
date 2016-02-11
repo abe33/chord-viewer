@@ -1,4 +1,5 @@
 import R from 'ramda'
+import C from './constants'
 
 const {
   always, compose, cond, converge, curry, defaultTo, drop, equals, either, head, join, keys, last, prop, replace, split, subtract, test, times, toLower, toUpper, unapply
@@ -18,7 +19,7 @@ const letter = compose(toUpper, replace(/[^A-G]/i, ''), head)
 
 const accidental = compose(toLower, replace(/^.|[^Bb#]$/gi, ''))
 
-const octave = compose(Number, defaultTo(4), last, drop(1), split(/(?=\d)/))
+const octave = compose(Number, defaultTo(C.MIDDLE_OCTAVE), last, drop(1), split(/(?=\d)/))
 
 const name = onlyOnNote(converge(unapply(join('')), [letter, accidental]))
 
@@ -45,25 +46,7 @@ const pitchTransposer = onlyOnNote((base, frequencies, note) => {
   return modulatePitch(prop(name(note), frequencies))
 })
 
-const frequency = pitchTransposer(4, {
-  'C': 261.63,
-  'C#': 277.18,
-  'Db': 277.18,
-  'D': 293.66,
-  'D#': 311.13,
-  'Eb': 311.13,
-  'E': 329.63,
-  'F': 349.23,
-  'F#': 369.99,
-  'Gb': 369.99,
-  'G': 392.00,
-  'G#': 415.30,
-  'Ab': 415.30,
-  'A': 440,
-  'A#': 466.16,
-  'Bb': 466.16,
-  'B': 493.88
-})
+const frequency = pitchTransposer(C.MIDDLE_OCTAVE, C.PITCH_BY_NAME)
 
 const substitute = (map) => {
   const re = new RegExp(join('|', keys(map)))
@@ -72,37 +55,12 @@ const substitute = (map) => {
 }
 
 const display = compose(
-  substitute({
-    '#': '♯',
-    'b': '♭'
-  }),
-  substitute({
-    '0': '₀',
-    '1': '₁',
-    '2': '₂',
-    '3': '₃',
-    '4': '₄',
-    '5': '₅',
-    '6': '₆',
-    '7': '₇',
-    '8': '₈',
-    '9': '₉'
-  }),
+  substitute(C.ACCIDENTALS_DISPLAY_MAP),
+  substitute(C.OCTAVE_DISPLAY_MAP),
   normalize
 )
 
-const variant = prop(R.__, {
-  'C#': 'Db',
-  'Db': 'C#',
-  'D#': 'Eb',
-  'Eb': 'D#',
-  'F#': 'Gb',
-  'Gb': 'F#',
-  'G#': 'Ab',
-  'Ab': 'G#',
-  'A#': 'Bb',
-  'Bb': 'A#'
-})
+const variant = prop(R.__, C.SEMITONE_CONVERSION)
 
 const noteEquals = curry((a, b) => {
   const compare = either(equals(name(a)), equals(variant(name(a))))
@@ -146,9 +104,7 @@ const transposeInScale = onlyOnNote((scale, offset, note) => {
   return walk([name(note), octave(note)])
 })
 
-const transposeBySemitone = transposeInScale([
-  'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'
-])
+const transposeBySemitone = transposeInScale(C.CHROMATIC_SCALE)
 
 export default {
   accidental,
