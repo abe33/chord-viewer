@@ -1,9 +1,14 @@
 import R from 'ramda'
+import C from './constants'
 import notes from './notes'
 
-const {all, anyPass, both, compose, curry, equals, last, length, test} = R
+const {
+  all, apply, anyPass, both, compose, converge, curry, equals, last, length, prop, subtract, test
+} = R
 
-const {isNote, normalize, transposeBySemitone} = notes
+const {
+  isNote, normalize, transposeBySemitone, diatonicDistance, chromaticDistance
+} = notes
 
 const positiveNumber = R.gte(R.__, 0)
 
@@ -25,6 +30,23 @@ const isIntervalName = anyPass([
   test(/^(perf|P)([45])$/)
 ])
 
+const perfectQualityForInterval = compose(
+  prop(R.__, C.DIATONIC_TO_CHROMATIC),
+  apply(diatonicDistance)
+)
+
+const qualityDifference = converge(subtract, [
+  apply(chromaticDistance),
+  perfectQualityForInterval
+])
+
+const quality = onlyOnInterval((interval) => {
+  return prop(
+    qualityDifference(interval),
+    prop(diatonicDistance(...interval), C.QUALITY_BY_DIATONIC_DISTANCE)
+  )
+})
+
 const intervalName = onlyOnInterval((interval) => {
 
 })
@@ -43,6 +65,7 @@ export default {
   isInterval,
   isIntervalName,
   intervalName,
+  quality,
   shortIntervalName,
   semitoneInterval
 }

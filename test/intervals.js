@@ -64,6 +64,18 @@ describe('intervals', () => {
     })
   })
 
+  describe('.quality()', () => {
+    it('returns the quality name of an interval', () => {
+      expect(intervals.quality([])).to.eql('')
+      expect(intervals.quality(['C'])).to.eql('')
+      expect(intervals.quality(['I', 'C#'])).to.eql('')
+
+      expect(intervals.quality(['C', 'C#'])).to.eql('augmented')
+      expect(intervals.quality(['C', 'Db'])).to.eql('minor')
+      expect(intervals.quality(['C', 'D'])).to.eql('major')
+    })
+  })
+
   describe.skip('.intervalName()', () => {
     it('returns the long interval name', () => {
       expect(intervals.intervalName([])).to.eql('')
