@@ -3,7 +3,7 @@ import C from './constants'
 import notes from './notes'
 
 const {
-  all, apply, anyPass, both, compose, converge, curry, equals, last, length, prop, subtract, test
+  all, apply, anyPass, both, compose, converge, curry, equals, has, join, last, length, map, prop, subtract, test, when
 } = R
 
 const {
@@ -47,13 +47,32 @@ const quality = onlyOnInterval((interval) => {
   )
 })
 
-const intervalName = onlyOnInterval((interval) => {
+const qualityTuple = interval => [
+  quality(interval),
+  diatonicDistance(...interval)
+]
 
-})
+const shortQualityPrefix = when(
+  has(R.__, C.INTERVAL_SHORT_PREFIXES),
+  prop(R.__, C.INTERVAL_SHORT_PREFIXES)
+)
 
-const shortIntervalName = onlyOnInterval((interval) => {
+const longQualityPrefix = when(
+  has(R.__, C.INTERVAL_LONG_PREFIXES),
+  prop(R.__, C.INTERVAL_LONG_PREFIXES)
+)
 
-})
+const intervalName = onlyOnInterval(compose(
+  join(''),
+  map(longQualityPrefix),
+  qualityTuple
+))
+
+const shortIntervalName = onlyOnInterval(compose(
+  join(''),
+  map(shortQualityPrefix),
+  qualityTuple
+))
 
 const semitoneInterval = (interval, note) => {
   return positiveNumber(interval) && isNote(note)

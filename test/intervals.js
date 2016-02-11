@@ -76,7 +76,7 @@ describe('intervals', () => {
     })
   })
 
-  describe.skip('.intervalName()', () => {
+  describe('.intervalName()', () => {
     it('returns the long interval name', () => {
       expect(intervals.intervalName([])).to.eql('')
       expect(intervals.intervalName(['C'])).to.eql('')
@@ -104,7 +104,7 @@ describe('intervals', () => {
     })
   })
 
-  describe.skip('.shortIntervalName()', () => {
+  describe('.shortIntervalName()', () => {
     it('returns the short interval name', () => {
       expect(intervals.shortIntervalName([])).to.eql('')
       expect(intervals.shortIntervalName(['C'])).to.eql('')
