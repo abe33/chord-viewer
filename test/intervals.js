@@ -64,6 +64,62 @@ describe('intervals', () => {
     })
   })
 
+  describe.skip('.intervalName()', () => {
+    it('returns the long interval name', () => {
+      expect(intervals.intervalName([])).to.eql('')
+      expect(intervals.intervalName(['C'])).to.eql('')
+      expect(intervals.intervalName(['I', 'C#'])).to.eql('')
+
+      expect(intervals.intervalName(['C', 'C#'])).to.eql('aug1')
+      expect(intervals.intervalName(['C', 'Db'])).to.eql('min2')
+      expect(intervals.intervalName(['C', 'D'])).to.eql('maj2')
+      expect(intervals.intervalName(['C', 'D#'])).to.eql('aug2')
+      expect(intervals.intervalName(['C', 'Eb'])).to.eql('min3')
+      expect(intervals.intervalName(['C', 'E'])).to.eql('maj3')
+      expect(intervals.intervalName(['C', 'F'])).to.eql('perf4')
+      expect(intervals.intervalName(['C', 'F#'])).to.eql('aug4')
+      expect(intervals.intervalName(['C', 'Gb'])).to.eql('dim5')
+      expect(intervals.intervalName(['C', 'G'])).to.eql('perf5')
+      expect(intervals.intervalName(['C', 'G#'])).to.eql('aug5')
+      expect(intervals.intervalName(['C', 'Ab'])).to.eql('min6')
+      expect(intervals.intervalName(['C', 'A'])).to.eql('maj6')
+      expect(intervals.intervalName(['C', 'A#'])).to.eql('aug6')
+      expect(intervals.intervalName(['C', 'Bb'])).to.eql('min7')
+      expect(intervals.intervalName(['C', 'B'])).to.eql('maj7')
+
+      expect(intervals.intervalName(['Gb', 'A#'])).to.eql('aug2')
+      expect(intervals.intervalName(['A', 'Db'])).to.eql('dim4')
+    })
+  })
+
+  describe.skip('.shortIntervalName()', () => {
+    it('returns the short interval name', () => {
+      expect(intervals.shortIntervalName([])).to.eql('')
+      expect(intervals.shortIntervalName(['C'])).to.eql('')
+      expect(intervals.shortIntervalName(['I', 'C#'])).to.eql('')
+
+      expect(intervals.shortIntervalName(['C', 'C#'])).to.eql('A1')
+      expect(intervals.shortIntervalName(['C', 'Db'])).to.eql('m2')
+      expect(intervals.shortIntervalName(['C', 'D'])).to.eql('M2')
+      expect(intervals.shortIntervalName(['C', 'D#'])).to.eql('A2')
+      expect(intervals.shortIntervalName(['C', 'Eb'])).to.eql('m3')
+      expect(intervals.shortIntervalName(['C', 'E'])).to.eql('M3')
+      expect(intervals.shortIntervalName(['C', 'F'])).to.eql('P4')
+      expect(intervals.shortIntervalName(['C', 'F#'])).to.eql('A4')
+      expect(intervals.shortIntervalName(['C', 'Gb'])).to.eql('d5')
+      expect(intervals.shortIntervalName(['C', 'G'])).to.eql('P5')
+      expect(intervals.shortIntervalName(['C', 'G#'])).to.eql('A5')
+      expect(intervals.shortIntervalName(['C', 'Ab'])).to.eql('m6')
+      expect(intervals.shortIntervalName(['C', 'A'])).to.eql('M6')
+      expect(intervals.shortIntervalName(['C', 'A#'])).to.eql('A6')
+      expect(intervals.shortIntervalName(['C', 'Bb'])).to.eql('m7')
+      expect(intervals.shortIntervalName(['C', 'B'])).to.eql('M7')
+
+      expect(intervals.shortIntervalName(['Gb', 'A#'])).to.eql('A2')
+      expect(intervals.shortIntervalName(['A', 'Db'])).to.eql('d4')
+    })
+  })
+
   describe('.semitoneInterval()', () => {
     it('returns an array that forms the interval', () => {
       expect(intervals.semitoneInterval(-1, 'A')).to.eql([])

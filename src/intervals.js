@@ -25,6 +25,13 @@ const isIntervalName = anyPass([
   test(/^(perf|P)([45])$/)
 ])
 
+const intervalName = onlyOnInterval((interval) => {
+
+})
+
+const shortIntervalName = onlyOnInterval((interval) => {
+
+})
 
 const semitoneInterval = (interval, note) => {
   return positiveNumber(interval) && isNote(note)
@@ -35,5 +42,7 @@ const semitoneInterval = (interval, note) => {
 export default {
   isInterval,
   isIntervalName,
+  intervalName,
+  shortIntervalName,
   semitoneInterval
 }
