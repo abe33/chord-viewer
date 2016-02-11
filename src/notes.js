@@ -113,12 +113,17 @@ const transposeInScale = onlyOnNote((scale, offset, note) => {
 
 const transposeBySemitone = transposeInScale(C.CHROMATIC_SCALE)
 
-const diatonicDistance = onlyOnNotesOrDefault(-1, (a, b) => {
-  const wrapInScale = v => v < 0 ? v + length(C.DIATONIC_SCALE) : v
-  const find = compose(indexOf(R.__, C.DIATONIC_SCALE), letter)
-  const computeDistance = compose(wrapInScale, apply(subtract), map(find))
+const wrapDistanceInScale = curry((scale, v) => v < 0 ? v + length(scale) : v)
 
-  return computeDistance([b, a])
+const wrapDiatonicDistance = wrapDistanceInScale(C.DIATONIC_SCALE)
+
+const diatonicIndex = indexOf(R.__, C.DIATONIC_SCALE)
+
+const diatonicDistance = onlyOnNotesOrDefault(-1, (a, b) => {
+  const find = compose(diatonicIndex, letter)
+  const distance = compose(wrapDiatonicDistance, apply(subtract), map(find))
+
+  return distance([b, a])
 })
 
 export default {
