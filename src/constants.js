@@ -37,10 +37,6 @@ export default {
     'A#': 'Bb',
     'Bb': 'A#'
   },
-  ACCIDENTALS_DISPLAY_MAP: {
-    '#': '♯',
-    'b': '♭'
-  },
   INTERVAL_SHORT_PREFIXES: {
     perfect: 'P',
     minor: 'm',
@@ -154,5 +150,9 @@ export default {
     '7': '₇',
     '8': '₈',
     '9': '₉'
+  },
+  ACCIDENTALS_DISPLAY_MAP: {
+    '#': '♯',
+    'b': '♭'
   }
 }
