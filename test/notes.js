@@ -210,7 +210,7 @@ describe('notes', () => {
   })
 
   describe('.diatonicDistance()', () => {
-    it('returns the diatonic distance between two notes', () => {
+    it('returns the distance between two notes diatonic letters', () => {
       expect(notes.diatonicDistance('I', 'B')).to.eql(-1)
       expect(notes.diatonicDistance('A', 'I')).to.eql(-1)
 
@@ -218,6 +218,18 @@ describe('notes', () => {
       expect(notes.diatonicDistance('Ab', 'B')).to.eql(1)
       expect(notes.diatonicDistance('A', 'C')).to.eql(2)
       expect(notes.diatonicDistance('Ab', 'C#')).to.eql(2)
+    })
+  })
+
+  describe('.chromaticDistance', () => {
+    it('returns the distance between two notes in semitones', () => {
+      expect(notes.chromaticDistance('I', 'B')).to.eql(-1)
+      expect(notes.chromaticDistance('A', 'I')).to.eql(-1)
+
+      expect(notes.chromaticDistance('A', 'B')).to.eql(2)
+      expect(notes.chromaticDistance('Ab', 'B')).to.eql(3)
+      expect(notes.chromaticDistance('A', 'C')).to.eql(3)
+      expect(notes.chromaticDistance('Ab', 'C#')).to.eql(5)
     })
   })
 })

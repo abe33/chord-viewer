@@ -25,6 +25,13 @@ export default {
     'Bb': 466.16,
     'B': 493.88
   },
+  CHROMATIC_VARIANTS: {
+    'Db': 'C#',
+    'Eb': 'D#',
+    'Gb': 'F#',
+    'Ab': 'G#',
+    'Bb': 'A#'
+  },
   SEMITONE_CONVERSION: {
     'C#': 'Db',
     'Db': 'C#',
