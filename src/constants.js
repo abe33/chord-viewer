@@ -58,15 +58,6 @@ export default {
     diminued: 'dim',
     augmented: 'aug'
   },
-  DIATONIC_TO_CHROMATIC: {
-    1: 0,
-    2: 2,
-    3: 4,
-    4: 5,
-    5: 7,
-    6: 9,
-    7: 11
-  },
   INTERVAL_OFFSETS: {
     min2: 1,
     maj2: 2,
@@ -98,6 +89,15 @@ export default {
     m7: 10,
     M7: 11,
     P8: 12
+  },
+  DIATONIC_TO_CHROMATIC: {
+    1: 0,
+    2: 2,
+    3: 4,
+    4: 5,
+    5: 7,
+    6: 9,
+    7: 11
   },
   QUALITY_BY_DIATONIC_DISTANCE: {
     '1': {
