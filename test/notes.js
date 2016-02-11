@@ -214,10 +214,10 @@ describe('notes', () => {
       expect(notes.diatonicDistance('I', 'B')).to.eql(-1)
       expect(notes.diatonicDistance('A', 'I')).to.eql(-1)
 
-      expect(notes.diatonicDistance('A', 'B')).to.eql(1)
-      expect(notes.diatonicDistance('Ab', 'B')).to.eql(1)
-      expect(notes.diatonicDistance('A', 'C')).to.eql(2)
-      expect(notes.diatonicDistance('Ab', 'C#')).to.eql(2)
+      expect(notes.diatonicDistance('A', 'B')).to.eql(2)
+      expect(notes.diatonicDistance('Ab', 'B')).to.eql(2)
+      expect(notes.diatonicDistance('A', 'C')).to.eql(3)
+      expect(notes.diatonicDistance('Ab', 'C#')).to.eql(3)
     })
   })
 
