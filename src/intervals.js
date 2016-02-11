@@ -74,9 +74,15 @@ const shortIntervalName = onlyOnInterval(compose(
   qualityTuple
 ))
 
-const semitoneInterval = (interval, note) => {
+const intervalFromSemitones = (interval, note) => {
   return positiveNumber(interval) && isNote(note)
     ? [normalize(note), transposeBySemitone(interval, note)]
+    : []
+}
+
+const intervalFromName = (interval, note) => {
+  return isIntervalName(interval) && isNote(note)
+    ? intervalFromSemitones(C.INTERVAL_OFFSETS[interval], note)
     : []
 }
 
@@ -86,5 +92,6 @@ export default {
   intervalName,
   quality,
   shortIntervalName,
-  semitoneInterval
+  intervalFromName,
+  intervalFromSemitones
 }

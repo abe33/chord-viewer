@@ -132,14 +132,25 @@ describe('intervals', () => {
     })
   })
 
-  describe('.semitoneInterval()', () => {
+  describe('.intervalFromSemitones()', () => {
     it('returns an array that forms the interval', () => {
-      expect(intervals.semitoneInterval(-1, 'A')).to.eql([])
-      expect(intervals.semitoneInterval(3, 'I')).to.eql([])
+      expect(intervals.intervalFromSemitones(-1, 'A')).to.eql([])
+      expect(intervals.intervalFromSemitones(3, 'I')).to.eql([])
 
-      expect(intervals.semitoneInterval(3, 'A')).to.eql(['A4', 'C5'])
-      expect(intervals.semitoneInterval(5, 'C')).to.eql(['C4', 'F4'])
-      expect(intervals.semitoneInterval(7, 'C3')).to.eql(['C3', 'G3'])
+      expect(intervals.intervalFromSemitones(3, 'A')).to.eql(['A4', 'C5'])
+      expect(intervals.intervalFromSemitones(5, 'C')).to.eql(['C4', 'F4'])
+      expect(intervals.intervalFromSemitones(7, 'C3')).to.eql(['C3', 'G3'])
+    })
+  })
+
+  describe('.intervalFromName()', () => {
+    it('returns an array that forms the interval', () => {
+      expect(intervals.intervalFromName('min5', 'A')).to.eql([])
+      expect(intervals.intervalFromName('maj7', 'I')).to.eql([])
+
+      expect(intervals.intervalFromName('min3', 'A')).to.eql(['A4', 'C5'])
+      expect(intervals.intervalFromName('perf4', 'C')).to.eql(['C4', 'F4'])
+      expect(intervals.intervalFromName('perf5', 'C3')).to.eql(['C3', 'G3'])
     })
   })
 })
