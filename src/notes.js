@@ -21,7 +21,6 @@ const onlyOnNotesOrDefault = curry((def, continuation) => {
 
 const onlyOnNote = onlyOnNoteOrDefault('')
 
-
 const letter = compose(toUpper, replace(/[^A-G]/i, ''), head)
 
 const accidental = compose(toLower, replace(/^.|[^Bb#]$/gi, ''))
