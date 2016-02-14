@@ -1,7 +1,12 @@
 export default {
   OCTAVE_PITCH_RATIO: 2,
   MIDDLE_OCTAVE: 4,
-  DIATONIC_SCALE: ['C', 'D', 'E', 'F', 'G', 'A', 'B'],
+  CHROMATIC_SCALE_LENGTH: 12,
+  NOTE_REGEXP: /[A-G]#?\d?/,
+  INTERVAL_REGEXP: /(P|m|M|d|A|perf|min|maj|dim|aug)(\d)/,
+  DIATONIC_SCALE: [
+    'C', 'D', 'E', 'F', 'G', 'A', 'B'
+  ],
   DIATONIC_INDEX_MAP: {
     'C': 0,
     'D': 1,
@@ -11,7 +16,9 @@ export default {
     'A': 5,
     'B': 6
   },
-  CHROMATIC_SCALE: ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'],
+  CHROMATIC_SCALE: [
+    'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'
+  ],
   CHROMATIC_INDEX_MAP: {
     'C': 0,
     'C#': 1,
@@ -31,9 +38,6 @@ export default {
     'Bb': 10,
     'B': 11
   },
-  CHROMATIC_SCALE_LENGTH: 12,
-  NOTE_REGEXP: /[A-G]#?\d?/,
-  INTERVAL_REGEXP: /(P|m|M|d|A|perf|min|maj|dim|aug)(\d)/,
   PITCH_BY_NAME: {
     'C': 261.63,
     'C#': 277.18,

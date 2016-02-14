@@ -68,30 +68,37 @@ const intervalName = onlyOnInterval(compose(
   qualityTuple
 ))
 
+const intervalDistance = (intervalName) => {
+  return isIntervalName(intervalName)
+    ? prop(intervalName, C.INTERVAL_OFFSETS)
+    : -1
+}
+
 const shortIntervalName = onlyOnInterval(compose(
   join(''),
   map(shortQualityPrefix),
   qualityTuple
 ))
 
-const intervalFromSemitones = (interval, note) => {
+const intervalFromSemitones = curry((interval, note) => {
   return positiveNumber(interval) && isNote(note)
     ? [normalize(note), transposeBySemitone(interval, note)]
     : []
-}
+})
 
-const intervalFromName = (interval, note) => {
+const intervalFromName = curry((interval, note) => {
   return isIntervalName(interval) && isNote(note)
-    ? intervalFromSemitones(C.INTERVAL_OFFSETS[interval], note)
+    ? intervalFromSemitones(intervalDistance(interval), note)
     : []
-}
+})
 
 export default {
+  intervalDistance,
+  intervalFromName,
+  intervalFromSemitones,
+  intervalName,
   isInterval,
   isIntervalName,
-  intervalName,
   quality,
-  shortIntervalName,
-  intervalFromName,
-  intervalFromSemitones
+  shortIntervalName
 }
