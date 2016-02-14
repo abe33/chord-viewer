@@ -2,7 +2,35 @@ export default {
   OCTAVE_PITCH_RATIO: 2,
   MIDDLE_OCTAVE: 4,
   DIATONIC_SCALE: ['C', 'D', 'E', 'F', 'G', 'A', 'B'],
+  DIATONIC_INDEX_MAP: {
+    'C': 0,
+    'D': 1,
+    'E': 2,
+    'F': 3,
+    'G': 4,
+    'A': 5,
+    'B': 6
+  },
   CHROMATIC_SCALE: ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'],
+  CHROMATIC_INDEX_MAP: {
+    'C': 0,
+    'C#': 1,
+    'Db': 1,
+    'D': 2,
+    'D#': 3,
+    'Eb': 3,
+    'E': 4,
+    'F': 5,
+    'F#': 6,
+    'Gb': 6,
+    'G': 7,
+    'G#': 8,
+    'Ab': 8,
+    'A': 9,
+    'A#': 10,
+    'Bb': 10,
+    'B': 11
+  },
   CHROMATIC_SCALE_LENGTH: 12,
   NOTE_REGEXP: /[A-G]#?\d?/,
   INTERVAL_REGEXP: /(P|m|M|d|A|perf|min|maj|dim|aug)(\d)/,
@@ -24,13 +52,6 @@ export default {
     'A#': 466.16,
     'Bb': 466.16,
     'B': 493.88
-  },
-  CHROMATIC_VARIANTS: {
-    'Db': 'C#',
-    'Eb': 'D#',
-    'Gb': 'F#',
-    'Ab': 'G#',
-    'Bb': 'A#'
   },
   SEMITONE_CONVERSION: {
     'C#': 'Db',

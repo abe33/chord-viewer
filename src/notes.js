@@ -2,7 +2,7 @@ import R from 'ramda'
 import C from './constants'
 
 const {
-  add, all, always, apply, compose, cond, converge, curry, defaultTo, drop, equals, either, has, head, indexOf, join, keys, last, length, map, prop, replace, split, subtract, test, times, toLower, toUpper, unapply, when
+  add, all, always, apply, compose, cond, converge, curry, defaultTo, drop, equals, either, head, indexOf, join, keys, last, length, map, prop, replace, split, subtract, test, times, toLower, toUpper, unapply
 } = R
 
 const isNote = test(/^[A-G](#|b)?(\d+)?$/i)
@@ -68,11 +68,6 @@ const display = compose(
 
 const variant = prop(R.__, C.SEMITONE_CONVERSION)
 
-const chromaticVariant = when(
-  has(R.__, C.CHROMATIC_VARIANTS),
-  prop(R.__, C.CHROMATIC_VARIANTS)
-)
-
 const noteEquals = curry((a, b) => {
   const compare = either(equals(name(a)), equals(variant(name(a))))
 
@@ -123,9 +118,9 @@ const wrapDiatonicDistance = wrapDistanceInScale(C.DIATONIC_SCALE)
 
 const wrapChromaticDistance = wrapDistanceInScale(C.CHROMATIC_SCALE)
 
-const diatonicIndex = indexOf(R.__, C.DIATONIC_SCALE)
+const diatonicIndex = prop(R.__, C.DIATONIC_INDEX_MAP)
 
-const chromaticIndex = indexOf(R.__, C.CHROMATIC_SCALE)
+const chromaticIndex = prop(R.__, C.CHROMATIC_INDEX_MAP)
 
 const diatonicDistance = onlyOnNotesOrDefault(-1, (a, b) => {
   const find = compose(diatonicIndex, letter)
@@ -135,8 +130,7 @@ const diatonicDistance = onlyOnNotesOrDefault(-1, (a, b) => {
 })
 
 const chromaticDistance = onlyOnNotesOrDefault(-1, (a, b) => {
-  const find = compose(chromaticIndex, chromaticVariant)
-  const distance = compose(wrapChromaticDistance, apply(subtract), map(find))
+  const distance = compose(wrapChromaticDistance, apply(subtract), map(chromaticIndex))
 
   return distance([b, a])
 })
