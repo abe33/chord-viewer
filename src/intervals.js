@@ -68,11 +68,13 @@ const intervalName = onlyOnInterval(compose(
   qualityTuple
 ))
 
-const intervalDistance = (intervalName) => {
+const intervalNameDistance = (intervalName) => {
   return isIntervalName(intervalName)
     ? prop(intervalName, C.INTERVAL_OFFSETS)
     : -1
 }
+
+const intervalDistance = compose(intervalNameDistance, intervalName)
 
 const shortIntervalName = onlyOnInterval(compose(
   join(''),
@@ -88,7 +90,7 @@ const intervalFromSemitones = curry((interval, note) => {
 
 const intervalFromName = curry((interval, note) => {
   return isIntervalName(interval) && isNote(note)
-    ? intervalFromSemitones(intervalDistance(interval), note)
+    ? intervalFromSemitones(intervalNameDistance(interval), note)
     : []
 })
 
@@ -97,6 +99,7 @@ export default {
   intervalFromName,
   intervalFromSemitones,
   intervalName,
+  intervalNameDistance,
   isInterval,
   isIntervalName,
   quality,

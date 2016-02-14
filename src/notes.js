@@ -138,7 +138,9 @@ const chromaticDistance = onlyOnNotesOrDefault(-1, (a, b) => {
 export default {
   accidental,
   chromaticDistance,
+  chromaticIndex,
   diatonicDistance,
+  diatonicIndex,
   display,
   frequency,
   isNote,

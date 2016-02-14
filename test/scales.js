@@ -39,4 +39,15 @@ describe('scales', () => {
       ])
     })
   })
+
+  describe('.transpose()', () => {
+    it('changes the root note and transposes the scale', () => {
+      expect(scales.transpose('J', ['C', 'D', 'E', 'F'])).to.eql([])
+      expect(scales.transpose('A', ['C', 'K', 'J', 'F'])).to.eql([])
+
+      expect(scales.transpose('A', ['C', 'D', 'E', 'F'])).to.eql([
+        'A', 'B', 'C#', 'D'
+      ])
+    })
+  })
 })

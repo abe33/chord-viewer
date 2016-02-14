@@ -7,11 +7,11 @@ const {
 } = R
 
 const {
-  isNote, name
+  isNote, name, transposeBySemitone
 } = notes
 
 const {
-  intervalDistance, intervalFromName, intervalName, isIntervalName
+  intervalDistance, intervalFromName, intervalName, intervalNameDistance, isIntervalName
 } = intervals
 
 const isScale = all(isNote)
@@ -34,13 +34,23 @@ const toIntervalNames = (scale) => {
 }
 
 const toIntervalDistances = compose(
-  map(when(isIntervalName, intervalDistance)),
+  map(when(isIntervalName, intervalNameDistance)),
   toIntervalNames
 )
+
+const transpose = curry((root, scale) => {
+  const transposer = compose(
+    name, transposeBySemitone(intervalDistance([head(scale), root]))
+  )
+  return isNote(root) && isScale(scale)
+    ? concat(R.of(root), map(transposer, tail(scale)))
+    : []
+})
 
 export default {
   fromIntervals,
   isScale,
   toIntervalDistances,
-  toIntervalNames
+  toIntervalNames,
+  transpose
 }
