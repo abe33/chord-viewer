@@ -33,10 +33,9 @@ const toIntervalNames = (scale) => {
     : []
 }
 
-const toIntervalDistances = compose(
-  map(when(isIntervalName, intervalNameDistance)),
-  toIntervalNames
-)
+const distanceWhenInterval = when(isIntervalName, intervalNameDistance)
+
+const toIntervalDistances = compose(map(distanceWhenInterval), toIntervalNames)
 
 const transpose = curry((root, scale) => {
   const transposer = compose(
