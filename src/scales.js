@@ -3,7 +3,7 @@ import notes from './notes'
 import intervals from './intervals'
 
 const {
-  all, compose, concat, curry, head, last, map, tail, when
+  all, append, compose, concat, curry, curryN, head, init, last, map, reduce, tail, when, zip
 } = R
 
 const {
@@ -16,12 +16,23 @@ const {
 
 const isScale = all(isNote)
 
+const lastNameFromInterval = curryN(2, compose(name, last, intervalFromName))
+
 const fromIntervals = curry((root, intervals) => {
+  const reducer = (memo, interval) => {
+    return append(lastNameFromInterval(interval, root), memo)
+  }
   return all(isIntervalName, intervals)
-    ? concat(
-      R.of(root),
-      map(compose(name, last, intervalFromName(R.__, root)), intervals)
-    )
+    ? reduce(reducer, R.of(root), intervals)
+    : []
+})
+
+const fromRelativeIntervals = curry((root, intervals) => {
+  const reducer = (memo, interval) => {
+    return append(lastNameFromInterval(interval, last(memo)), memo)
+  }
+  return all(isIntervalName, intervals)
+    ? reduce(reducer, R.of(root), intervals)
     : []
 })
 
@@ -30,6 +41,14 @@ const toIntervalNames = (scale) => {
 
   return isScale(scale)
     ? concat(root, map(compose(intervalName, concat(root)), tail(scale)))
+    : []
+}
+
+const toRelativeIntervalNames = (scale) => {
+  const root = R.of(head(scale))
+  const zipped = zip(init(scale), tail(scale))
+  return isScale(scale)
+    ? concat(root, map(intervalName, zipped))
     : []
 }
 
@@ -48,8 +67,10 @@ const transpose = curry((root, scale) => {
 
 export default {
   fromIntervals,
+  fromRelativeIntervals,
   isScale,
   toIntervalDistances,
   toIntervalNames,
+  toRelativeIntervalNames,
   transpose
 }

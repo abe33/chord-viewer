@@ -20,12 +20,36 @@ describe('scales', () => {
     })
   })
 
+  describe('.fromRelativeIntervals()', () => {
+    it('returns a scale from a root note and an array of intervals', () => {
+      expect(scales.fromRelativeIntervals('C', [
+        'foo', 'bar', 'baz'
+      ])).to.eql([])
+
+      expect(scales.fromRelativeIntervals('E', [
+        'perf4', 'perf4', 'perf4'
+      ])).to.eql([
+        'E', 'A', 'D', 'G'
+      ])
+    })
+  })
+
   describe('.toIntervalNames()', () => {
     it('returns an array with a root note and the interval names', () => {
       expect(scales.toIntervalNames(['C', 'K', 'J', 'F'])).to.eql([])
 
       expect(scales.toIntervalNames(['C', 'D', 'E', 'F'])).to.eql([
         'C', 'maj2', 'maj3', 'perf4'
+      ])
+    })
+  })
+
+  describe('.toRelativeIntervalNames()', () => {
+    it('returns an array with a root note and the interval names', () => {
+      expect(scales.toRelativeIntervalNames(['C', 'K', 'J', 'F'])).to.eql([])
+
+      expect(scales.toRelativeIntervalNames(['E', 'A', 'D', 'G'])).to.eql([
+        'E', 'perf4', 'perf4', 'perf4'
       ])
     })
   })
