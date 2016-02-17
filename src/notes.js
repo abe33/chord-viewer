@@ -5,7 +5,7 @@ const {
   add, all, always, apply, compose, cond, converge, curry, defaultTo, drop, equals, either, head, indexOf, join, keys, last, length, map, prop, replace, split, subtract, test, times, toLower, toUpper, unapply
 } = R
 
-const isNote = test(/^[A-G](#|b)?(\d+)?$/i)
+const isNote = test(new RegExp(`^${C.NOTE_REGEXP.source}$`, 'i'))
 
 const onlyOnNoteOrDefault = curry((def, continuation) => {
   return R.curryN(continuation.length, (...args) => {

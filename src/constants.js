@@ -2,7 +2,7 @@ export default {
   OCTAVE_PITCH_RATIO: 2,
   MIDDLE_OCTAVE: 4,
   CHROMATIC_SCALE_LENGTH: 12,
-  NOTE_REGEXP: /[A-G]#?\d?/,
+  NOTE_REGEXP: /[A-G](#|b)?(\d+)?/,
   INTERVAL_REGEXP: /(P|m|M|d|A|perf|min|maj|dim|aug)(\d)/,
   DIATONIC_SCALE: [
     'C', 'D', 'E', 'F', 'G', 'A', 'B'
