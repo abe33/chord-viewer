@@ -1,5 +1,5 @@
 
-import c from './constants'
+import c from '../constants'
 
 export default {
   transposeAtOctave (name, octave) {

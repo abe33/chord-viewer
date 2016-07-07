@@ -1,4 +1,4 @@
-import c from './constants'
+import c from '../constants'
 import u from './utils'
 
 export default class Note {

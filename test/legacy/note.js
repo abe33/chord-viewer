@@ -1,5 +1,5 @@
 import expect from 'expect.js'
-import Note from '../src/note'
+import Note from '../../src/legacy/note'
 
 describe('Note', () => {
   describe('.getFrequency', () => {

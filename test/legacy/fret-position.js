@@ -1,5 +1,5 @@
 import expect from 'expect.js'
-import FretPosition from '../src/fret-position'
+import FretPosition from '../../src/legacy/fret-position'
 
 describe('FretPosition', () => {
   describe('creation', () => {
