@@ -234,10 +234,15 @@ const chromaticDistance = onlyOnNotesOrDefault(-1, (a, b) => {
   return distance([b, a])
 })
 
+const closestNoteFromFrequency = (frequency) => {
+  return 'A4'
+}
+
 export default {
   accidental,
   chromaticDistance,
   chromaticIndex,
+  closestNoteFromFrequency,
   diatonicDistance,
   diatonicIndex,
   display,

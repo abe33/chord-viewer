@@ -221,7 +221,7 @@ describe('notes', () => {
     })
   })
 
-  describe('.chromaticDistance', () => {
+  describe('.chromaticDistance()', () => {
     it('returns the distance between two notes in semitones', () => {
       expect(notes.chromaticDistance('I', 'B')).to.eql(-1)
       expect(notes.chromaticDistance('A', 'I')).to.eql(-1)
@@ -230,6 +230,12 @@ describe('notes', () => {
       expect(notes.chromaticDistance('Ab', 'B')).to.eql(3)
       expect(notes.chromaticDistance('A', 'C')).to.eql(3)
       expect(notes.chromaticDistance('Ab', 'C#')).to.eql(5)
+    })
+  })
+
+  describe('.closestNoteFromFrequency()', () => {
+    it('returns the note whose frequency is the closest', () => {
+      expect(notes.closestNoteFromFrequency(430)).to.eql('A4')
     })
   })
 })
