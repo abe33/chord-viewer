@@ -45,7 +45,7 @@ describe('scales', () => {
   })
 
   describe('.toRelativeIntervalNames()', () => {
-    it('returns an array with a root note and the interval names', () => {
+    it('returns an array with a root note and the interval name from one note to the next', () => {
       expect(scales.toRelativeIntervalNames(['C', 'K', 'J', 'F'])).to.eql([])
 
       expect(scales.toRelativeIntervalNames(['E', 'A', 'D', 'G'])).to.eql([
@@ -60,6 +60,16 @@ describe('scales', () => {
 
       expect(scales.toIntervalDistances(['C', 'D', 'E', 'F'])).to.eql([
         'C', 2, 4, 5
+      ])
+    })
+  })
+
+  describe('.toRelativeIntervalDistances()', () => {
+    it('returns an array with a root note and the interval distance from one note to the next', () => {
+      expect(scales.toRelativeIntervalDistances(['C', 'K', 'J', 'F'])).to.eql([])
+
+      expect(scales.toRelativeIntervalDistances(['E', 'A', 'D', 'G'])).to.eql([
+        'E', 5, 5, 5
       ])
     })
   })

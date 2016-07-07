@@ -56,6 +56,14 @@ const distanceWhenInterval = when(isIntervalName, intervalNameDistance)
 
 const toIntervalDistances = compose(map(distanceWhenInterval), toIntervalNames)
 
+const toRelativeIntervalDistances = (scale) => {
+  const root = R.of(head(scale))
+  const zipped = zip(init(scale), tail(scale))
+  return isScale(scale)
+    ? concat(root, map(intervalDistance, zipped))
+    : []
+}
+
 const transpose = curry((root, scale) => {
   const transposer = compose(
     name, transposeBySemitone(intervalDistance([head(scale), root]))
@@ -71,6 +79,7 @@ export default {
   isScale,
   toIntervalDistances,
   toIntervalNames,
+  toRelativeIntervalDistances,
   toRelativeIntervalNames,
   transpose
 }
