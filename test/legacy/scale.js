@@ -1,6 +1,6 @@
 import expect from 'expect.js'
-import Scale from '../src/scale'
-import Note from '../src/note'
+import Scale from '../../src/legacy/scale'
+import Note from '../../src/legacy/note'
 
 describe('Scale', () => {
   let [scale] = []

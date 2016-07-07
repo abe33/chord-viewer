@@ -1,7 +1,7 @@
 import expect from 'expect.js'
-import FretBoard from '../src/fret-board'
-import Tuning from '../src/tuning'
-import Note from '../src/note'
+import FretBoard from '../../src/legacy/fret-board'
+import Tuning from '../../src/legacy/tuning'
+import Note from '../../src/legacy/note'
 
 describe('FretBoard', () => {
   let [fretboard, tuning] = []

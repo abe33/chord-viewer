@@ -1,4 +1,4 @@
-import constants from './constants'
+import constants from '../constants'
 import utils from './utils'
 import Note from './note'
 

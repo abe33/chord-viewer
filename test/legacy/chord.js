@@ -1,6 +1,6 @@
 import expect from 'expect.js'
-import Chord from '../src/chord'
-import FretPosition from '../src/fret-position'
+import Chord from '../../src/legacy/chord'
+import FretPosition from '../../src/legacy/fret-position'
 
 describe('Chord', () => {
   var [chord] = []

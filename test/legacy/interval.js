@@ -1,6 +1,6 @@
 import expect from 'expect.js'
-import Note from '../src/note'
-import Interval from '../src/interval'
+import Note from '../../src/legacy/note'
+import Interval from '../../src/legacy/interval'
 
 describe('Interval', () => {
   describe('creation', () => {

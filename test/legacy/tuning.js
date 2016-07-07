@@ -1,6 +1,6 @@
 import expect from 'expect.js'
-import Tuning from '../src/tuning'
-import Note from '../src/note'
+import Tuning from '../../src/legacy/tuning'
+import Note from '../../src/legacy/note'
 
 describe('Tuning', () => {
   let [tuning] = []
