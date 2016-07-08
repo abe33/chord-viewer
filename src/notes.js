@@ -2,7 +2,7 @@ import R from 'ramda'
 import C from './constants'
 
 const {
-  add, all, always, apply, compose, cond, converge, curry, defaultTo, drop, equals, either, head, indexOf, join, keys, last, length, map, prop, replace, split, subtract, test, times, toLower, toUpper, unapply
+  add, all, always, apply, call, compose, cond, converge, curry, defaultTo, drop, equals, either, filter, head, indexOf, join, keys, last, length, map, prop, replace, split, subtract, test, times, toLower, toUpper, unapply
 } = R
 
 /**
@@ -234,6 +234,28 @@ const chromaticDistance = onlyOnNotesOrDefault(-1, (a, b) => {
   return distance([b, a])
 })
 
+/**
+ * `[Number] -> Number -> Boolean`
+ */
+const inPitchRange = curry(([a, b], c) => a <= c && c < b)
+
+/**
+ * `([*] -> Boolean) -> Number`
+ */
+const findOctave = (filterer) => {
+  return call(compose(head, head, filter(filterer)), C.OCTAVES_PITCH_RANGES)
+}
+
+/**
+ * `Number -> Number`
+ */
+const octaveFromFrequency = (frequency) => {
+  return findOctave(([, range]) => inPitchRange(range, frequency))
+}
+
+/**
+ * `Number -> String`
+ */
 const closestNoteFromFrequency = (frequency) => {
   return 'A4'
 }
@@ -253,6 +275,7 @@ export default {
   normalize,
   noteEquals,
   octave,
+  octaveFromFrequency,
   pitchEquals,
   transposeBySemitone,
   transposeToOctave
