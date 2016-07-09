@@ -25,9 +25,14 @@ describe('notes', () => {
       expect(notes.isNote('Z#4')).to.be(false)
     })
 
-    it('does not match strings with invalid octave number', () => {
-      expect(notes.isNote('A-1')).to.be(false)
-      expect(notes.isNote('Bb-1')).to.be(false)
+    it('matches strings with negative octave number (subsubcontra)', () => {
+      expect(notes.isNote('A-1')).to.be(true)
+      expect(notes.isNote('Bb-1')).to.be(true)
+    })
+
+    it('does not match strings with negative octave number below -1', () => {
+      expect(notes.isNote('A-2')).to.be(false)
+      expect(notes.isNote('Bb-2')).to.be(false)
     })
 
     it('does not match strings with invalid accidental characters', () => {
@@ -70,6 +75,7 @@ describe('notes', () => {
       expect(notes.accidental('B')).to.eql('')
       expect(notes.accidental('B4')).to.eql('')
       expect(notes.accidental('Bb')).to.eql('b')
+      expect(notes.accidental('Bb-1')).to.eql('b')
       expect(notes.accidental('BB')).to.eql('b')
       expect(notes.accidental('AB')).to.eql('b')
       expect(notes.accidental('A#')).to.eql('#')
@@ -78,18 +84,20 @@ describe('notes', () => {
     })
   })
 
-  describe('.octave', () => {
+  describe('.octave()', () => {
     it('returns the octave number of the note', () => {
       expect(notes.octave('A')).to.eql(4)
       expect(notes.octave('B4')).to.eql(4)
       expect(notes.octave('C#8')).to.eql(8)
       expect(notes.octave('D#1')).to.eql(1)
+      expect(notes.octave('D#-1')).to.eql(-1)
     })
   })
 
   describe('.normalize()', () => {
     it('returns the normalized form of the passed-in note', () => {
-      expect(notes.normalize('H-1')).to.eql('')
+      expect(notes.normalize('H-2')).to.eql('')
+      expect(notes.normalize('A-1')).to.eql('A-1')
       expect(notes.normalize('A')).to.eql('A4')
       expect(notes.normalize('AB')).to.eql('Ab4')
       expect(notes.normalize('bB4')).to.eql('Bb4')
@@ -128,7 +136,7 @@ describe('notes', () => {
 
     it('returns no frequency for invalid notes', () => {
       expect(notes.frequency('U')).to.eql(0)
-      expect(notes.frequency('A-1')).to.eql(0)
+      expect(notes.frequency('A-2')).to.eql(0)
     })
   })
 
@@ -155,7 +163,7 @@ describe('notes', () => {
 
     it('returns an empty string for invalid notes', () => {
       expect(notes.display('I')).to.eql('')
-      expect(notes.display('C-1')).to.eql('')
+      expect(notes.display('C-2')).to.eql('')
     })
   })
 
@@ -236,23 +244,27 @@ describe('notes', () => {
   describe('.octaveFromFrequency()', () => {
     it('returns the octave in which a frequency reside', () => {
       expect(notes.octaveFromFrequency(0)).to.be(undefined)
-      expect(notes.octaveFromFrequency(10000)).to.be(undefined)
+      expect(notes.octaveFromFrequency(100000)).to.be(undefined)
 
+      expect(notes.octaveFromFrequency(8.2)).to.eql(-1)
       expect(notes.octaveFromFrequency(55)).to.eql(1)
       expect(notes.octaveFromFrequency(110)).to.eql(2)
       expect(notes.octaveFromFrequency(220)).to.eql(3)
       expect(notes.octaveFromFrequency(440)).to.eql(4)
       expect(notes.octaveFromFrequency(500)).to.eql(4)
       expect(notes.octaveFromFrequency(880)).to.eql(5)
+      expect(notes.octaveFromFrequency(10000)).to.be(9)
     })
   })
   describe('.closestNoteFromFrequency()', () => {
     it('returns the note whose frequency is the closest', () => {
       expect(notes.closestNoteFromFrequency(0)).to.be(undefined)
-      expect(notes.closestNoteFromFrequency(10000)).to.be(undefined)
+      expect(notes.closestNoteFromFrequency(100000)).to.be(undefined)
 
+      expect(notes.closestNoteFromFrequency(8.2)).to.eql('C-1')
       expect(notes.closestNoteFromFrequency(430)).to.eql('A4')
       expect(notes.closestNoteFromFrequency(215)).to.eql('A3')
+      expect(notes.closestNoteFromFrequency(10000)).to.be('D#9')
     })
   })
 })

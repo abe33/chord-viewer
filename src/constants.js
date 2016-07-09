@@ -5,7 +5,7 @@ const {divide, map, multiply} = R
 const OCTAVE_PITCH_RATIO = 2
 const MIDDLE_OCTAVE = 4
 const CHROMATIC_SCALE_LENGTH = 12
-const NOTE_REGEXP = /[A-G](#|b)?(\d+)?/
+const NOTE_REGEXP = /[A-G](#|b)?(-1|\d+)?/
 const INTERVAL_REGEXP = /(P|m|M|d|A|perf|min|maj|dim|aug)(\d)/
 const DIATONIC_SCALE = [
   'C', 'D', 'E', 'F', 'G', 'A', 'B'
@@ -68,6 +68,8 @@ const PITCH_BY_NAME = {
 const DEFAULT_PITCH_RANGE = [PITCH_BY_NAME.C, PITCH_BY_NAME.C * 2]
 
 const OCTAVES_PITCH_RANGES = [
+  [ -1, map(divide(R.__, 32), DEFAULT_PITCH_RANGE) ],
+  [ 0, map(divide(R.__, 16), DEFAULT_PITCH_RANGE) ],
   [ 1, map(divide(R.__, 8), DEFAULT_PITCH_RANGE) ],
   [ 2, map(divide(R.__, 4), DEFAULT_PITCH_RANGE) ],
   [ 3, map(divide(R.__, 2), DEFAULT_PITCH_RANGE) ],
@@ -75,7 +77,8 @@ const OCTAVES_PITCH_RANGES = [
   [ 5, map(multiply(R.__, 2), DEFAULT_PITCH_RANGE) ],
   [ 6, map(multiply(R.__, 4), DEFAULT_PITCH_RANGE) ],
   [ 7, map(multiply(R.__, 8), DEFAULT_PITCH_RANGE) ],
-  [ 8, map(multiply(R.__, 16), DEFAULT_PITCH_RANGE) ]
+  [ 8, map(multiply(R.__, 16), DEFAULT_PITCH_RANGE) ],
+  [ 9, map(multiply(R.__, 32), DEFAULT_PITCH_RANGE) ]
 ]
 
 const SEMITONE_CONVERSION = {

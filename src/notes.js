@@ -2,7 +2,7 @@ import R from 'ramda'
 import C from './constants'
 
 const {
-  add, all, always, apply, call, compose, concat, cond, converge, curry, defaultTo, drop, equals, either, filter, head, indexOf, join, keys, last, length, map, prop, reduce, replace, split, subtract, test, times, toLower, toUpper, unapply, zip
+  add, all, always, apply, call, compose, concat, cond, converge, curry, defaultTo, drop, equals, either, filter, head, indexOf, join, keys, last, length, map, match, prop, reduce, replace, split, subtract, test, times, toLower, toUpper, unapply, when, zip
 } = R
 
 /**
@@ -41,12 +41,20 @@ const letter = compose(toUpper, replace(/[^A-G]/i, ''), head)
 /**
  * `Note -> String`
  */
-const accidental = compose(toLower, replace(/^.|[^Bb#]$/gi, ''))
+const accidental = compose(toLower, replace(/^.|[^Bb#]+$/gi, ''))
 
 /**
  * `Note -> Number`
  */
-const octave = compose(Number, defaultTo(C.MIDDLE_OCTAVE), last, drop(1), split(/(?=\d)/))
+const octave = compose(
+  Number,
+  defaultTo(C.MIDDLE_OCTAVE),
+  when(s => s === '', () => undefined),
+  join(''),
+  filter(match(/^[-\d]+$/g)),
+  drop(1),
+  split(/(?=-|\d)/)
+)
 
 /**
  * `Note -> Note`
