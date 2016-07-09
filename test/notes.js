@@ -235,6 +235,9 @@ describe('notes', () => {
 
   describe('.octaveFromFrequency()', () => {
     it('returns the octave in which a frequency reside', () => {
+      expect(notes.octaveFromFrequency(0)).to.be(undefined)
+      expect(notes.octaveFromFrequency(10000)).to.be(undefined)
+
       expect(notes.octaveFromFrequency(55)).to.eql(1)
       expect(notes.octaveFromFrequency(110)).to.eql(2)
       expect(notes.octaveFromFrequency(220)).to.eql(3)
@@ -245,8 +248,11 @@ describe('notes', () => {
   })
   describe('.closestNoteFromFrequency()', () => {
     it('returns the note whose frequency is the closest', () => {
+      expect(notes.closestNoteFromFrequency(0)).to.be(undefined)
+      expect(notes.closestNoteFromFrequency(10000)).to.be(undefined)
+
       expect(notes.closestNoteFromFrequency(430)).to.eql('A4')
-      // expect(notes.closestNoteFromFrequency(210)).to.eql('A3')
+      expect(notes.closestNoteFromFrequency(215)).to.eql('A3')
     })
   })
 })

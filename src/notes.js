@@ -2,7 +2,7 @@ import R from 'ramda'
 import C from './constants'
 
 const {
-  add, all, always, apply, call, compose, cond, converge, curry, defaultTo, drop, equals, either, filter, head, indexOf, join, keys, last, length, map, prop, replace, split, subtract, test, times, toLower, toUpper, unapply
+  add, all, always, apply, call, compose, concat, cond, converge, curry, defaultTo, drop, equals, either, filter, head, indexOf, join, keys, last, length, map, prop, reduce, replace, split, subtract, test, times, toLower, toUpper, unapply, zip
 } = R
 
 /**
@@ -235,15 +235,16 @@ const chromaticDistance = onlyOnNotesOrDefault(-1, (a, b) => {
 })
 
 /**
- * `[Number] -> Number -> Boolean`
+ * `[Number, Number] -> Number -> Boolean`
  */
 const inPitchRange = curry(([a, b], c) => a <= c && c < b)
 
 /**
- * `([*] -> Boolean) -> Number`
+ * `(Number -> Boolean) -> Number`
  */
 const findOctave = (filterer) => {
-  return call(compose(head, head, filter(filterer)), C.OCTAVES_PITCH_RANGES)
+  const octave = call(compose(head, filter(filterer)), C.OCTAVES_PITCH_RANGES)
+  return octave ? head(octave) : undefined
 }
 
 /**
@@ -254,10 +255,17 @@ const octaveFromFrequency = (frequency) => {
 }
 
 /**
- * `Number -> String`
+ * `Number -> Note`
  */
-const closestNoteFromFrequency = (frequency) => {
-  return 'A4'
+const closestNoteFromFrequency = (freq) => {
+  const octave = octaveFromFrequency(freq)
+  if (!octave) { return undefined }
+
+  const scale = map(concat(R.__, octave), C.CHROMATIC_SCALE)
+  const mapper = compose(Math.abs, subtract(freq), frequency)
+  const reducer = (memo, val) => (memo[1] < val[1]) ? memo : val
+  const distances = zip(scale, map(mapper, scale))
+  return head(reduce(reducer, [-1, 9999], distances))
 }
 
 export default {
