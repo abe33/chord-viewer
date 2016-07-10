@@ -256,6 +256,7 @@ describe('notes', () => {
       expect(notes.octaveFromFrequency(10000)).to.be(9)
     })
   })
+
   describe('.closestNoteFromFrequency()', () => {
     it('returns the note whose frequency is the closest', () => {
       expect(notes.closestNoteFromFrequency(0)).to.be(undefined)
