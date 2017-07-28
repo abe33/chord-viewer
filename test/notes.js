@@ -179,6 +179,10 @@ describe('notes', () => {
     it('returns true for a A sharp and a B flat on different octaves', () => {
       expect(notes.noteEquals('A#', 'Bb5')).to.be(true)
     })
+
+    it('returns true for a C sharp and a B sharp', () => {
+      expect(notes.noteEquals('C', 'B#')).to.be(true)
+    })
   })
 
   describe('.pitchEquals()', () => {
@@ -192,6 +196,7 @@ describe('notes', () => {
 
     it('returns true for two notes with equals frequencies but different names', () => {
       expect(notes.pitchEquals('A#', 'Bb')).to.be(true)
+      expect(notes.pitchEquals('C', 'B#')).to.be(true)
     })
   })
 

@@ -26,6 +26,7 @@ const CHROMATIC_SCALE = [
 ]
 
 const CHROMATIC_INDEX_MAP = {
+  'Cb': 11,
   'C': 0,
   'C#': 1,
   'Db': 1,
@@ -33,6 +34,8 @@ const CHROMATIC_INDEX_MAP = {
   'D#': 3,
   'Eb': 3,
   'E': 4,
+  'E#': 5,
+  'Fb': 4,
   'F': 5,
   'F#': 6,
   'Gb': 6,
@@ -42,10 +45,12 @@ const CHROMATIC_INDEX_MAP = {
   'A': 9,
   'A#': 10,
   'Bb': 10,
-  'B': 11
+  'B': 11,
+  'B#': 0
 }
 
 const PITCH_BY_NAME = {
+  'Cb': 493.88,
   'C': 261.63,
   'C#': 277.18,
   'Db': 277.18,
@@ -53,6 +58,8 @@ const PITCH_BY_NAME = {
   'D#': 311.13,
   'Eb': 311.13,
   'E': 329.63,
+  'E#': 349.23,
+  'Fb': 329.63,
   'F': 349.23,
   'F#': 369.99,
   'Gb': 369.99,
@@ -62,7 +69,8 @@ const PITCH_BY_NAME = {
   'A': 440,
   'A#': 466.16,
   'Bb': 466.16,
-  'B': 493.88
+  'B': 493.88,
+  'B#': 261.63
 }
 
 const DEFAULT_PITCH_RANGE = [PITCH_BY_NAME.C, PITCH_BY_NAME.C * 2]
@@ -82,16 +90,24 @@ const OCTAVES_PITCH_RANGES = [
 ]
 
 const SEMITONE_CONVERSION = {
+  'Cb': 'B',
+  'C': 'B#',
   'C#': 'Db',
   'Db': 'C#',
   'D#': 'Eb',
   'Eb': 'D#',
+  'E': 'Fb',
+  'E#': 'F',
+  'Fb': 'E',
+  'F': 'E#',
   'F#': 'Gb',
   'Gb': 'F#',
   'G#': 'Ab',
   'Ab': 'G#',
   'A#': 'Bb',
-  'Bb': 'A#'
+  'Bb': 'A#',
+  'B': 'Cb',
+  'B#': 'C'
 }
 
 const INTERVAL_SHORT_PREFIXES = {
