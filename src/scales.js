@@ -3,11 +3,11 @@ import notes from './notes'
 import intervals from './intervals'
 
 const {
-  all, append, compose, concat, curry, curryN, head, init, last, map, reduce, tail, when, zip
+  all, append, compose, concat, contains, curry, curryN, head, init, last, map, reduce, tail, when, zip
 } = R
 
 const {
-  isNote, name, transposeBySemitone
+  isNote, letter, name, transposeBySemitone, enharmonicVariant
 } = notes
 
 const {
@@ -73,7 +73,18 @@ const transpose = curry((root, scale) => {
     : []
 })
 
+const containsLetter = (scale, note) =>
+  contains(letter(note), map(letter, scale))
+
+const enharmonicSpelling = (scale) =>
+  isScale(scale)
+    ? scale.reduce((memo, note) =>
+        memo.concat(containsLetter(memo, note) ? enharmonicVariant(note) : note)
+      , [])
+    : []
+
 export default {
+  enharmonicSpelling,
   fromIntervals,
   fromRelativeIntervals,
   isScale,

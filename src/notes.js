@@ -128,13 +128,13 @@ const display = compose(
 /**
  * `Note -> Note`
  */
-const variant = prop(R.__, C.SEMITONE_CONVERSION)
+const enharmonicVariant = prop(R.__, C.SEMITONE_CONVERSION)
 
 /**
  * `Note -> Note -> Boolean`
  */
 const noteEquals = curry((a, b) => {
-  const compare = either(equals(name(a)), equals(variant(name(a))))
+  const compare = either(equals(name(a)), equals(enharmonicVariant(name(a))))
 
   return compare(name(b))
 })
@@ -284,6 +284,7 @@ export default {
   diatonicDistance,
   diatonicIndex,
   display,
+  enharmonicVariant,
   frequency,
   isNote,
   letter,

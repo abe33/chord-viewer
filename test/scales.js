@@ -84,4 +84,14 @@ describe('scales', () => {
       ])
     })
   })
+
+  describe('.enharmonicSpelling()', () => {
+    it('converts the notes in a scale so that the scale become enharmonically correct', () => {
+      expect(scales.enharmonicSpelling(['C', 'K', 'J', 'F'])).to.eql([])
+
+      expect(scales.enharmonicSpelling(['C', 'D', 'D#', 'E#'])).to.eql([
+        'C', 'D', 'Eb', 'F'
+      ])
+    })
+  })
 })
