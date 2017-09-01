@@ -11,7 +11,7 @@ const {
 const isNote = test(new RegExp(`^${C.NOTE_REGEXP.source}$`, 'i'))
 
 /**
- * `* -> (Note -> *) -> (String -> *)`
+ * `a -> (Note -> a) -> (String -> a)`
  */
 const onlyOnNoteOrDefault = curry((def, continuation) => {
   return R.curryN(continuation.length, (...args) => {
@@ -20,7 +20,7 @@ const onlyOnNoteOrDefault = curry((def, continuation) => {
 })
 
 /**
- * `* -> ([Note] -> *) -> ([String] -> *)`
+ * `a -> ([Note] -> a) -> ([String] -> a)`
  */
 const onlyOnNotesOrDefault = curry((def, continuation) => {
   return R.curryN(continuation.length, (...args) => {
@@ -29,7 +29,7 @@ const onlyOnNotesOrDefault = curry((def, continuation) => {
 })
 
 /**
- * `(Note -> *) -> (String -> *)`
+ * `(Note -> a) -> (String -> a)`
  */
 const onlyOnNote = onlyOnNoteOrDefault('')
 
